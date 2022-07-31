@@ -1,7 +1,6 @@
 package deps
 
 import (
-	"path/filepath"
 	"testing"
 
 	"github.com/hb-chen/deps/pkg/graph"
@@ -28,12 +27,12 @@ func Test_info(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			_, err := info(&graph.Package{
-				System:  "",
-				Name:    "",
+				System:  "go",
+				Name:    "github.com/hb-chen/deps",
 				Version: "",
 			})
 			if (err != nil) != tt.wantErr {
-				t.Errorf("infoGo() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("info() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			// if !reflect.DeepEqual(got, tt.want) {
@@ -41,9 +40,4 @@ func Test_info(t *testing.T) {
 			// }
 		})
 	}
-}
-
-func TestDir(t *testing.T) {
-	p, _ := filepath.Abs("./")
-	t.Logf("path: %v", p)
 }

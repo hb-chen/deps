@@ -62,7 +62,11 @@ func Deps(system, project string) error {
 				continue
 			}
 
-			limiter.Wait(context.TODO())
+			if err := limiter.Wait(context.TODO()); err != nil {
+				log.Logger.Error(err)
+				continue
+			}
+
 			if info, err := info(graph.Requirement); err == nil {
 
 				deps[graph.Requirement.Name] = &Dependency{

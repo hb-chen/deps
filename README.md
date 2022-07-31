@@ -1,7 +1,6 @@
 # Deps
 
-- Go module graph
-  - `TODO` Support more language: `maven` `npm`
+- Support `go mod` and `maven`
 - Dependencies license, advisories...
   - [deps.dev](https://deps.dev/)
 - https://github.com/ferstl/depgraph-maven-plugin
@@ -45,7 +44,7 @@ Pkg: golang.org/x/mod, Licenses: BSD-3-Clause , Direct: false ,Advisories: 0
 
 ### Maven
 
-> 依赖 [github.com/ferstl/depgraph-maven-plugin](https://github.com/ferstl/depgraph-maven-plugin)
+> 依赖 [github.com/ferstl/depgraph-maven-plugin](https://github.com/ferstl/depgraph-maven-plugin)，`./mvnw depgraph:graph`
 
 ```shell
 # Run
