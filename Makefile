@@ -15,7 +15,7 @@ endif
 
 .PHONY: release
 release:
-	goreleaser release --config $(goreleaser_config) --skip-validate --skip-publish --rm-dist
+	goreleaser release --config $(goreleaser_config) --skip-validate --rm-dist
 
 .PHONY: snapshot
 snapshot:
