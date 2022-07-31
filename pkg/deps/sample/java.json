@@ -1,0 +1,277 @@
+{
+  "package": {
+    "system": "MAVEN",
+    "name": "org.springframework:spring-context"
+  },
+  "owners": [],
+  "version": {
+    "version": "5.3.20",
+    "symbolicVersions": [],
+    "refreshedAt": 1657383783,
+    "description": "Spring Context",
+    "licenses": [
+      "Apache-2.0"
+    ],
+    "dependencyCount": 0,
+    "dependentCount": 4054,
+    "dependentCountDirect": 879,
+    "dependentCountIndirect": 3181,
+    "links": {
+      "origins": [
+        "https://search.maven.org/artifact/org.springframework/spring-context/5.3.20/jar"
+      ],
+      "homepage": "https://github.com/spring-projects/spring-framework",
+      "issues": "https://github.com/spring-projects/spring-framework/issues",
+      "repo": "https://github.com/spring-projects/spring-framework"
+    },
+    "projects": [
+      {
+        "type": "GITHUB",
+        "name": "spring-projects/spring-framework",
+        "observedAt": 1658951701,
+        "issues": 1394,
+        "forks": 34285,
+        "stars": 48595,
+        "description": "Spring Framework",
+        "license": "Apache-2.0",
+        "link": "https://github.com/spring-projects/spring-framework",
+        "scorecardV2": {
+          "date": "2022-07-18",
+          "repo": {
+            "name": "github.com/spring-projects/spring-framework",
+            "commit": "069d6d32809316edcb70eb6ae0239b402ad59362"
+          },
+          "scorecard": {
+            "version": "v4.4.0-36-g096cbd0",
+            "commit": "096cbd0622cc28ba321f920fd3ab833f5cdf81ab"
+          },
+          "check": [
+            {
+              "name": "Code-Review",
+              "documentation": {
+                "short": "Determines if the project requires code review before pull requests (aka merge requests) are merged.",
+                "url": "https://github.com/ossf/scorecard/blob/096cbd0622cc28ba321f920fd3ab833f5cdf81ab/docs/checks.md#code-review"
+              },
+              "score": 0,
+              "reason": "no reviews found",
+              "details": [
+                "Warn: no reviews found for commit: 069d6d32809316edcb70eb6ae0239b402ad59362",
+                "Warn: no reviews found for commit: 3ae1b9ba578aae78641790192e130c27f2b993e7",
+                "Warn: no reviews found for commit: 4560313b9dbba9086e9812bc65734538f8573dab",
+                "Warn: no reviews found for commit: 85173b5de3273c70367605447500fffb2cc53f5a",
+                "Warn: no reviews found for commit: 68e28a5f5958f9ff74c76183006e5cc2623a0765",
+                "Warn: no reviews found for commit: d6345db7c9886e5675a45f8b2612cd780ead23d9",
+                "Warn: no reviews found for commit: 978cdfff461d37f991172198e46466aa23bfe595",
+                "Warn: no reviews found for commit: 1acb41ff4339e412cc2c0e3485a1e6d91f632d6f",
+                "Warn: no reviews found for commit: cd4f4d978db79efe125b259c7bb1a901ba0dec17",
+                "Warn: no reviews found for commit: f7c32d3a0b398d96b6f161a063acfe72dd5e7aa3",
+                "Warn: no reviews found for commit: 9c0a2eeeb2288b8e0a0057ccddd1dd48da42ede2",
+                "Warn: no reviews found for commit: 85d4a79cdcab3864d942e69f1f85b3b592b190a8",
+                "Warn: no reviews found for commit: c0bea373a2a6bf3de239d5b84c420c1813129a3b",
+                "Warn: no reviews found for commit: 7fa9f1c9cfbefcc1a7445f614a08b18363b37ffa",
+                "Warn: no reviews found for commit: 578f155809e783c57b5a86a3ec7b335e967a452c",
+                "Warn: no reviews found for commit: 444e06fa2299b07ce9e6e763a611f129a213ce7d",
+                "Warn: no reviews found for commit: 87b83e829128ad6aa2dd8d01e3663a55ef00b035",
+                "Warn: no reviews found for commit: 0ea4ee163cea6b28096382be3a4251ccb33ac95d",
+                "Warn: no reviews found for commit: 75ab47b57ce038d8341900b199a442fefb255387",
+                "Warn: no reviews found for commit: f2d31b7a20c1e561bf63be1b019f63fc127f18c4",
+                "Warn: no reviews found for commit: 4f8516e2c3ca420b1608840ab901bf9df7e4d5f1",
+                "Warn: no reviews found for commit: 72e4a5f9fea49d2dd09911ae87f2fa5f795943e2",
+                "Warn: no reviews found for commit: 3fd72652be3988e4b28946bab0398f0b3db9d98a",
+                "Warn: no reviews found for commit: 1f3ea5133ffa5050f49d0d933c57bf77940351a0",
+                "Warn: no reviews found for commit: 77f8408e80115fc8b49b35431d6c53a313b042a1",
+                "Warn: no reviews found for commit: c34ccfdb810463c4ffa8fedb38d586cc1c9a91f4",
+                "Warn: no reviews found for commit: f5503298fb00d0dde053ec3bb4cd9f91c41313a2",
+                "Warn: no reviews found for commit: 9962aa00a06c3567caf2c5040178aa007484fb84",
+                "Warn: no reviews found for commit: db43425bf92431d8fb4c73c4b5de3c3f75db47e8",
+                "Warn: no reviews found for commit: f145b53fc8139f5f1435f486e998aa92bb410718"
+              ]
+            },
+            {
+              "name": "Maintained",
+              "documentation": {
+                "short": "Determines if the project is \"actively maintained\".",
+                "url": "https://github.com/ossf/scorecard/blob/096cbd0622cc28ba321f920fd3ab833f5cdf81ab/docs/checks.md#maintained"
+              },
+              "score": 10,
+              "reason": "30 commit(s) out of 30 and 23 issue activity out of 30 found in the last 90 days -- score normalized to 10",
+              "details": []
+            },
+            {
+              "name": "Webhooks",
+              "documentation": {
+                "short": "This check validate if the webhook defined in the repository have a token configured.",
+                "url": "https://github.com/ossf/scorecard/blob/096cbd0622cc28ba321f920fd3ab833f5cdf81ab/docs/checks.md#webhooks"
+              },
+              "score": -1,
+              "reason": "check is not supported for this request: SCORECARD_V6 is not set, not running the Webhook check",
+              "details": [
+                "Warn: SCORECARD_V6 is not set, not running the Webhook check"
+              ]
+            },
+            {
+              "name": "CII-Best-Practices",
+              "documentation": {
+                "short": "Determines if the project has a CII Best Practices Badge.",
+                "url": "https://github.com/ossf/scorecard/blob/096cbd0622cc28ba321f920fd3ab833f5cdf81ab/docs/checks.md#cii-best-practices"
+              },
+              "score": 0,
+              "reason": "no badge detected",
+              "details": []
+            },
+            {
+              "name": "Vulnerabilities",
+              "documentation": {
+                "short": "Determines if the project has open, known unfixed vulnerabilities.",
+                "url": "https://github.com/ossf/scorecard/blob/096cbd0622cc28ba321f920fd3ab833f5cdf81ab/docs/checks.md#vulnerabilities"
+              },
+              "score": 10,
+              "reason": "no vulnerabilities detected",
+              "details": []
+            },
+            {
+              "name": "Signed-Releases",
+              "documentation": {
+                "short": "Determines if the project cryptographically signs release artifacts.",
+                "url": "https://github.com/ossf/scorecard/blob/096cbd0622cc28ba321f920fd3ab833f5cdf81ab/docs/checks.md#signed-releases"
+              },
+              "score": -1,
+              "reason": "no releases found",
+              "details": [
+                "Warn: no GitHub releases found"
+              ]
+            },
+            {
+              "name": "Branch-Protection",
+              "documentation": {
+                "short": "Determines if the default and release branches are protected with GitHub's branch protection settings.",
+                "url": "https://github.com/ossf/scorecard/blob/096cbd0622cc28ba321f920fd3ab833f5cdf81ab/docs/checks.md#branch-protection"
+              },
+              "score": 0,
+              "reason": "branch protection not enabled on development/release branches",
+              "details": [
+                "Warn: branch protection not enabled for branch 'main'"
+              ]
+            },
+            {
+              "name": "Security-Policy",
+              "documentation": {
+                "short": "Determines if the project has published a security policy.",
+                "url": "https://github.com/ossf/scorecard/blob/096cbd0622cc28ba321f920fd3ab833f5cdf81ab/docs/checks.md#security-policy"
+              },
+              "score": 10,
+              "reason": "security policy file detected",
+              "details": [
+                "Info: security policy detected in current repo: SECURITY.md:1"
+              ]
+            },
+            {
+              "name": "License",
+              "documentation": {
+                "short": "Determines if the project has defined a license.",
+                "url": "https://github.com/ossf/scorecard/blob/096cbd0622cc28ba321f920fd3ab833f5cdf81ab/docs/checks.md#license"
+              },
+              "score": 10,
+              "reason": "license file detected",
+              "details": [
+                "Info: : LICENSE.txt:1"
+              ]
+            },
+            {
+              "name": "Packaging",
+              "documentation": {
+                "short": "Determines if the project is published as a package that others can easily download, install, easily update, and uninstall.",
+                "url": "https://github.com/ossf/scorecard/blob/096cbd0622cc28ba321f920fd3ab833f5cdf81ab/docs/checks.md#packaging"
+              },
+              "score": -1,
+              "reason": "no published package detected",
+              "details": [
+                "Warn: no GitHub publishing workflow detected"
+              ]
+            },
+            {
+              "name": "Dangerous-Workflow",
+              "documentation": {
+                "short": "Determines if the project's GitHub Action workflows avoid dangerous patterns.",
+                "url": "https://github.com/ossf/scorecard/blob/096cbd0622cc28ba321f920fd3ab833f5cdf81ab/docs/checks.md#dangerous-workflow"
+              },
+              "score": 10,
+              "reason": "no dangerous workflow patterns detected",
+              "details": []
+            },
+            {
+              "name": "Token-Permissions",
+              "documentation": {
+                "short": "Determines if the project's workflows follow the principle of least privilege.",
+                "url": "https://github.com/ossf/scorecard/blob/096cbd0622cc28ba321f920fd3ab833f5cdf81ab/docs/checks.md#token-permissions"
+              },
+              "score": 0,
+              "reason": "non read-only tokens detected in GitHub workflows",
+              "details": [
+                "Warn: no topLevel permission defined: .github/workflows/backport-bot.yml:1: update your workflow using https://app.stepsecurity.io/secureworkflow/starWangx/npmtester/backport-bot.yml/master?enable=permissions",
+                "Warn: no topLevel permission defined: .github/workflows/gradle-wrapper-validation.yml:1: update your workflow using https://app.stepsecurity.io/secureworkflow/starWangx/npmtester/gradle-wrapper-validation.yml/master?enable=permissions"
+              ]
+            },
+            {
+              "name": "Dependency-Update-Tool",
+              "documentation": {
+                "short": "Determines if the project uses a dependency update tool.",
+                "url": "https://github.com/ossf/scorecard/blob/096cbd0622cc28ba321f920fd3ab833f5cdf81ab/docs/checks.md#dependency-update-tool"
+              },
+              "score": 0,
+              "reason": "no update tool detected",
+              "details": [
+                "Warn: dependabot config file not detected in source location.\n\t\t\tWe recommend setting this configuration in code so it can be easily verified by others.",
+                "Warn: renovatebot config file not detected in source location.\n\t\t\tWe recommend setting this configuration in code so it can be easily verified by others."
+              ]
+            },
+            {
+              "name": "Fuzzing",
+              "documentation": {
+                "short": "Determines if the project uses fuzzing.",
+                "url": "https://github.com/ossf/scorecard/blob/096cbd0622cc28ba321f920fd3ab833f5cdf81ab/docs/checks.md#fuzzing"
+              },
+              "score": 10,
+              "reason": "project is fuzzed with [OSSFuzz]",
+              "details": []
+            },
+            {
+              "name": "Pinned-Dependencies",
+              "documentation": {
+                "short": "Determines if the project has declared and pinned its dependencies.",
+                "url": "https://github.com/ossf/scorecard/blob/096cbd0622cc28ba321f920fd3ab833f5cdf81ab/docs/checks.md#pinned-dependencies"
+              },
+              "score": 0,
+              "reason": "dependency not pinned by hash detected -- score normalized to 0",
+              "details": [
+                "Warn: GitHub-owned GitHubAction not pinned by hash: .github/workflows/backport-bot.yml:13: update your workflow using https://app.stepsecurity.io/secureworkflow/starWangx/npmtester/backport-bot.yml/master?enable=pin",
+                "Warn: GitHub-owned GitHubAction not pinned by hash: .github/workflows/backport-bot.yml:14: update your workflow using https://app.stepsecurity.io/secureworkflow/starWangx/npmtester/backport-bot.yml/master?enable=pin",
+                "Warn: GitHub-owned GitHubAction not pinned by hash: .github/workflows/gradle-wrapper-validation.yml:9: update your workflow using https://app.stepsecurity.io/secureworkflow/starWangx/npmtester/gradle-wrapper-validation.yml/master?enable=pin",
+                "Warn: third-party GitHubAction not pinned by hash: .github/workflows/gradle-wrapper-validation.yml:10: update your workflow using https://app.stepsecurity.io/secureworkflow/starWangx/npmtester/gradle-wrapper-validation.yml/master?enable=pin",
+                "Warn: containerImage not pinned by hash: ci/images/ci-image/Dockerfile:1: pin your Docker image by updating ubuntu to ubuntu@sha256:b6b83d3c331794420340093eb706a6f152d9c1fa51b262d9bf34594887c2c7ac",
+                "Warn: downloadThenRun not pinned by hash: .github/workflows/backport-bot.yml:25"
+              ]
+            },
+            {
+              "name": "Binary-Artifacts",
+              "documentation": {
+                "short": "Determines if the project has generated executable (binary) artifacts in the source repository.",
+                "url": "https://github.com/ossf/scorecard/blob/096cbd0622cc28ba321f920fd3ab833f5cdf81ab/docs/checks.md#binary-artifacts"
+              },
+              "score": 9,
+              "reason": "binaries present in source code",
+              "details": [
+                "Warn: binary detected: spring-orm/src/test/resources/org/springframework/orm/jpa/jpa-archive.jar:1"
+              ]
+            }
+          ],
+          "metadata": [],
+          "score": 5.4
+        }
+      }
+    ],
+    "advisories": [],
+    "relatedPackages": {}
+  },
+  "defaultVersion": "5.3.22"
+}

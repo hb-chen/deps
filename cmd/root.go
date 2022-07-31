@@ -4,14 +4,19 @@ import (
 	"os"
 
 	"github.com/hb-chen/deps/pkg/deps"
+	"github.com/hb-chen/deps/pkg/log"
 	_ "github.com/hb-chen/deps/pkg/log"
 	"github.com/spf13/cobra"
 )
 
+var system = ""
+var project = ""
+
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "graph",
-	Short: "A brief description of your application",
+	Use:     "deps",
+	Version: "0.0.1",
+	Short:   "A brief description of your application",
 	Long: `A longer description that spans multiple lines and likely contains
 examples and usage of using your application. For example:
 
@@ -22,7 +27,9 @@ to quickly create a Cobra application.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
-		deps.Deps()
+		if err := deps.Deps(system, project); err != nil {
+			log.Logger.Error(err)
+		}
 	},
 }
 
@@ -44,5 +51,6 @@ func init() {
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	rootCmd.PersistentFlags().StringVarP(&system, "system", "s", "auto", "System type:auto, mod, maven")
+	rootCmd.PersistentFlags().StringVarP(&project, "project", "p", "", `Project path (default "", use "pwd")`)
 }

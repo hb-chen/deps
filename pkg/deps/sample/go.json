@@ -1,0 +1,42 @@
+{
+  "package": {
+    "system": "GO",
+    "name": "github.com/hb-chen/deps"
+  },
+  "owners": [],
+  "version": {
+    "version": "v0.0.0-20220424095100-bb6c886cdd4d",
+    "symbolicVersions": [],
+    "refreshedAt": 1653053282,
+    "isDefault": true,
+    "licenses": [
+      "Apache-2.0"
+    ],
+    "dependencyCount": 0,
+    "dependentCount": 0,
+    "dependentCountDirect": 0,
+    "dependentCountIndirect": 0,
+    "links": {
+      "origins": [
+        "https://pkg.go.dev/mod/github.com/hb-chen/deps@v0.0.0-20220424095100-bb6c886cdd4d"
+      ],
+      "repo": "https://github.com/hb-chen/deps"
+    },
+    "projects": [
+      {
+        "type": "GITHUB",
+        "name": "hb-chen/deps",
+        "observedAt": 1655687966,
+        "issues": 0,
+        "forks": 0,
+        "stars": 1,
+        "description": "Go, java, npm ependencies. License, Advisories …",
+        "license": "Apache-2.0",
+        "link": "https://github.com/hb-chen/deps"
+      }
+    ],
+    "advisories": [],
+    "relatedPackages": {}
+  },
+  "defaultVersion": "v0.0.0-20220424095100-bb6c886cdd4d"
+}
