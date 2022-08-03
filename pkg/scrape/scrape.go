@@ -1,6 +1,7 @@
-package deps
+package scrape
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -93,7 +94,11 @@ type Advisory struct {
 	ObservedAt     int      `json:"observedAt"`
 }
 
-func info(p *graph.Package) (*PackageInfo, error) {
+func Info(p *graph.Package) (*PackageInfo, error) {
+	if err := limiter.Wait(context.TODO()); err != nil {
+		return nil, err
+	}
+
 	reqUrl := fmt.Sprintf("https://deps.dev/_/s/%s/p/%s/v/%s", p.System, url.PathEscape(p.Name), p.Version)
 
 	resp, err := req.Get(reqUrl)

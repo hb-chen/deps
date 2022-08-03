@@ -1,8 +1,6 @@
 package deps
 
 import (
-	"context"
-	"fmt"
 	"path/filepath"
 	"strings"
 
@@ -10,14 +8,20 @@ import (
 	"github.com/hb-chen/deps/pkg/graph/maven"
 	"github.com/hb-chen/deps/pkg/graph/mod"
 	"github.com/hb-chen/deps/pkg/log"
+	"github.com/hb-chen/deps/pkg/output"
+	"github.com/hb-chen/deps/pkg/output/template"
+	"github.com/hb-chen/deps/pkg/scrape"
 	"github.com/pkg/errors"
 )
 
-type Dependency struct {
-	Package    string
-	Licenses   []string
-	Direct     bool
-	Advisories []*Advisory
+func filepathAbs(path string) string {
+	if path, err := filepath.Abs(path); err != nil {
+		log.Logger.Fatal(err)
+		return ""
+	} else {
+		return path
+	}
+
 }
 
 func Deps(system, project string) error {
@@ -27,14 +31,14 @@ func Deps(system, project string) error {
 	}
 	log.Logger.Debugf("system type %v", project)
 
+	// TODO 完善模板和输出文件配置，以及相对目录问题
+	tplPath := filepathAbs("./template/md.tpl")
+	outFile := filepathAbs("./out/deps.md")
+
 	if project == "" {
 		project = "./"
 	}
-	if path, err := filepath.Abs(project); err == nil {
-		project = path
-	} else {
-		return err
-	}
+	project = filepathAbs(project)
 	log.Logger.Debugf("project path %v", project)
 
 	opts := []graph.Option{
@@ -56,38 +60,32 @@ func Deps(system, project string) error {
 	if err != nil {
 		log.Logger.Error(err)
 	} else {
-		deps := make(map[string]*Dependency)
-		for _, graph := range graphs {
-			if _, ok := deps[graph.Requirement.Name]; ok {
+		deps := make(map[string]*output.Dependency)
+		for _, dep := range graphs {
+			if _, ok := deps[dep.Requirement.Name]; ok {
 				continue
 			}
 
-			if err := limiter.Wait(context.TODO()); err != nil {
-				log.Logger.Error(err)
-				continue
-			}
-
-			if info, err := info(graph.Requirement); err == nil {
-
-				deps[graph.Requirement.Name] = &Dependency{
-					Package:    graph.Requirement.Name,
+			if info, err := scrape.Info(dep.Requirement); err == nil {
+				deps[dep.Requirement.Name] = &output.Dependency{
+					System:     dep.Requirement.System,
+					Package:    dep.Requirement.Name,
+					Version:    dep.Requirement.Version,
 					Licenses:   info.Version.Licenses,
-					Direct:     graph.Requirement.Direct,
+					Direct:     dep.Requirement.Direct,
 					Advisories: info.Version.Advisories,
 				}
 
 				log.Logger.Infof("Pkg: %v, Licenses: %v", info.Package.Name, strings.Join(info.Version.Licenses, ","))
 			} else {
-				log.Logger.Errorw(err.Error(), "p", graph.Requirement.Name, "v", graph.Requirement.Version)
+				log.Logger.Errorw(err.Error(), "p", dep.Requirement.Name, "v", dep.Requirement.Version)
 			}
 		}
 
-		// TODO output
-		fmt.Println("Dependencies:")
-		for _, dep := range deps {
-			fmt.Printf("Pkg: %v, Licenses: %v , Direct: %v ,Advisories: %v \n", dep.Package,
-				strings.Join(dep.Licenses, ","), dep.Direct,
-				len(dep.Advisories))
+		// TODO 输出选项及自定义配置
+		out := template.NewOutput()
+		if err := out.Generate(deps, tplPath, outFile); err != nil {
+			log.Logger.Error(err)
 		}
 	}
 

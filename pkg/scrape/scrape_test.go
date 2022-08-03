@@ -1,4 +1,4 @@
-package deps
+package scrape
 
 import (
 	"testing"
@@ -26,7 +26,7 @@ func Test_info(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err := info(&graph.Package{
+			_, err := Info(&graph.Package{
 				System:  "go",
 				Name:    "github.com/hb-chen/deps",
 				Version: "",
