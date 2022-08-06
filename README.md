@@ -1,10 +1,28 @@
 # Deps
 
-- Support `go mod` and `maven`
-- Dependencies license, advisories...
-  - [deps.dev](https://deps.dev/)
-- https://github.com/ferstl/depgraph-maven-plugin
-- https://stackoverflow.com/questions/25997519/how-to-view-the-dependency-tree-of-a-given-npm-module
+Deps 是一个帮助获取项目依赖包的版本、开源协议、安全漏洞等清单的工具，数据源来自 Google 的 [deps.dev](https://deps.dev/) 项目，当前支持 Go、Java。
+
+## Feature
+
+- 获取项目依赖包清单，包括以下信息:
+  - [x] 包名、版本
+  - [x] 开源协议
+  - [x] 安全漏洞
+  - [ ] 是否直接依赖
+  - [ ] 包间依赖拓扑
+- 支持语言
+  - [x] Go mod
+  - [x] Java maven
+  - [ ] npm
+    - https://stackoverflow.com/questions/25997519/how-to-view-the-dependency-tree-of-a-given-npm-module
+- 数据源
+  - [x] [deps.dev](https://deps.dev/)
+  - [ ] 取本地 mod/pom 中的 licenses 信息
+- 其他功能
+  - [ ] 支持模板输出，自定义格式
+  - [ ] 开源协议友好性标识
+  - [ ] 通过 Project 目录文件自动识别语言及包管理工具
+  - [ ] License 文件提取
 
 ## Install
 
@@ -34,7 +52,10 @@ deps -s mod
 deps -s mod -p {project path}
 
 # Output
-Dependencies:
+# Markdown
+./out/deps.md
+
+# Stdout
 Dependencies:
 Pkg: golang.org/x/tools, Licenses: BSD-3-Clause , Direct: false ,Advisories: 0 
 Pkg: github.com/kr/text, Licenses: MIT , Direct: false ,Advisories: 0 
@@ -44,7 +65,7 @@ Pkg: golang.org/x/mod, Licenses: BSD-3-Clause , Direct: false ,Advisories: 0
 
 ### Maven
 
-> 依赖 [github.com/ferstl/depgraph-maven-plugin](https://github.com/ferstl/depgraph-maven-plugin)，`./mvnw depgraph:graph`
+> 引入依赖 [github.com/ferstl/depgraph-maven-plugin](https://github.com/ferstl/depgraph-maven-plugin)，能够通过 `mvnw depgraph:graph` OR `mvn depgraph:graph` 生成 `target/dependency-graph.json` 
 
 ```shell
 # Run
@@ -55,7 +76,10 @@ deps -s maven
 deps -s maven -p ./example/java/
 
 # Output
-Dependencies:
+# Markdown
+./out/deps.md
+
+# Stdout
 Dependencies:
 Pkg: org.mockito:mockito-junit-jupiter, Licenses: MIT , Direct: false ,Advisories: 0 
 Pkg: org.ow2.asm:asm, Licenses: BSD-3-Clause , Direct: false ,Advisories: 0 
@@ -63,15 +87,6 @@ Pkg: jakarta.xml.bind:jakarta.xml.bind-api, Licenses: non-standard , Direct: fal
 Pkg: org.apache.logging.log4j:log4j-api, Licenses: Apache-2.0 , Direct: false ,Advisories: 0 
 ...
 ```
-
-## TODO
-
-- npm
-- 取本地 mod/pom 中的 licenses 信息
-- 支持模板输出，自定义格式
-- 支持自定义 `mod` 或 `maven` 的 `cmd`
-- 通过 Project 目录文件自动识别语言及包管理工具
-
 
 ## deps.dev API
 
