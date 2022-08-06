@@ -23,11 +23,18 @@ Deps 是一个帮助获取项目依赖包的版本、开源协议、安全漏洞
   - [ ] 开源协议友好性标识
   - [ ] 通过 Project 目录文件自动识别语言及包管理工具
   - [ ] License 文件提取
+  - [ ] Brew 安装
   
 
 <img width="875" alt="image" src="https://user-images.githubusercontent.com/730866/183232928-4d37c224-3252-47d8-ac50-7e848745517a.png">
 
 ## Install
+
+### Binary
+
+[Releases](https://github.com/hb-chen/deps/releases)
+
+### Source
 
 ```shell
 go install github.com/hb-chen/deps@latest
