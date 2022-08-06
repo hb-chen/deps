@@ -22,5 +22,5 @@ func (d *Dependency) AdvisoriesURL() string {
 }
 
 type Output interface {
-	Generate(inputs map[string]*Dependency, tplPath, outFile string) error
+	Generate(inputs map[string]*Dependency) error
 }

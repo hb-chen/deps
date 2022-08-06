@@ -11,16 +11,18 @@ import (
 	"github.com/pkg/errors"
 )
 
-type tpl struct{}
+type tpl struct {
+	opts *Options
+}
 
-func (*tpl) Generate(deps map[string]*output.Dependency, tplPath, outFile string) error {
-	tmpl, err := template.ParseFiles(tplPath)
+func (t *tpl) Generate(deps map[string]*output.Dependency) error {
+	tmpl, err := template.ParseFiles(t.opts.TplFile)
 	if err != nil {
-		return errors.Wrap(err, "tpl:"+tplPath)
+		return errors.Wrap(err, "tpl:"+t.opts.TplFile)
 	}
 
 	// create dir when not exist
-	dir := filepath.Dir(outFile)
+	dir := filepath.Dir(t.opts.OutFile)
 	if _, err := os.Stat(dir); os.IsNotExist(err) {
 		if err = os.MkdirAll(dir, 0760); err != nil {
 			return err
@@ -29,7 +31,7 @@ func (*tpl) Generate(deps map[string]*output.Dependency, tplPath, outFile string
 		return err
 	}
 
-	tmpfile, err := ioutil.TempFile(dir, filepath.Base(outFile)+".")
+	tmpfile, err := ioutil.TempFile(dir, filepath.Base(t.opts.OutFile)+".")
 	if err != nil {
 		return err
 	}
@@ -43,7 +45,7 @@ func (*tpl) Generate(deps map[string]*output.Dependency, tplPath, outFile string
 
 	err = tmpl.Execute(tmpfile, deps)
 	if err != nil {
-		return errors.Wrap(err, "tmpl:"+outFile)
+		return errors.Wrap(err, "tmpl:"+t.opts.OutFile)
 	}
 
 	if err = tmpfile.Chmod(0644); err != nil {
@@ -57,7 +59,7 @@ func (*tpl) Generate(deps map[string]*output.Dependency, tplPath, outFile string
 		return err
 	}
 
-	err = os.Rename(tmpfile.Name(), outFile)
+	err = os.Rename(tmpfile.Name(), t.opts.OutFile)
 	if err != nil {
 		return err
 	}
@@ -65,6 +67,7 @@ func (*tpl) Generate(deps map[string]*output.Dependency, tplPath, outFile string
 	return nil
 }
 
-func NewOutput() output.Output {
-	return &tpl{}
+func NewOutput(opts ...Option) output.Output {
+	o := NewOptions(opts...)
+	return &tpl{opts: o}
 }

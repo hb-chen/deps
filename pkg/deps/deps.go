@@ -9,6 +9,7 @@ import (
 	"github.com/hb-chen/deps/pkg/graph/mod"
 	"github.com/hb-chen/deps/pkg/log"
 	"github.com/hb-chen/deps/pkg/output"
+	"github.com/hb-chen/deps/pkg/output/std"
 	"github.com/hb-chen/deps/pkg/output/template"
 	"github.com/hb-chen/deps/pkg/scrape"
 	"github.com/pkg/errors"
@@ -32,7 +33,7 @@ func Deps(system, project string) error {
 	log.Logger.Debugf("system type %v", project)
 
 	// TODO 完善模板和输出文件配置，以及相对目录问题
-	tplPath := filepathAbs("./template/md.tpl")
+	tplFile := filepathAbs("./template/md.tpl")
 	outFile := filepathAbs("./out/deps.md")
 
 	if project == "" {
@@ -78,13 +79,28 @@ func Deps(system, project string) error {
 
 				log.Logger.Infof("Pkg: %v, Licenses: %v", info.Package.Name, strings.Join(info.Version.Licenses, ","))
 			} else {
+				deps[dep.Requirement.Name] = &output.Dependency{
+					System:  dep.Requirement.System,
+					Package: dep.Requirement.Name,
+					Version: dep.Requirement.Version,
+					Direct:  dep.Requirement.Direct,
+				}
+
 				log.Logger.Errorw(err.Error(), "p", dep.Requirement.Name, "v", dep.Requirement.Version)
 			}
 		}
 
 		// TODO 输出选项及自定义配置
-		out := template.NewOutput()
-		if err := out.Generate(deps, tplPath, outFile); err != nil {
+		out := template.NewOutput(
+			template.WithTplFile(tplFile),
+			template.WithOutFile(outFile),
+		)
+		if err := out.Generate(deps); err != nil {
+			log.Logger.Error(err)
+		}
+
+		stdOut := std.NewOutput()
+		if err := stdOut.Generate(deps); err != nil {
 			log.Logger.Error(err)
 		}
 	}

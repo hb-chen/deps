@@ -49,7 +49,13 @@ func (m *Maven) Graphs() ([]*graph.Dependency, error) {
 		return nil, err
 	}
 
-	cmd := exec.Command("./mvnw", "depgraph:graph")
+	// 默认 mvn，优先使用项目内置的 mvnw
+	mvnCmd := "mvn"
+	if _, err := os.Stat("mvnw"); err == nil {
+		mvnCmd = "mvnw"
+	}
+
+	cmd := exec.Command(mvnCmd, "depgraph:graph")
 
 	var stdout, stderr bytes.Buffer
 	cmd.Stdout = &stdout
