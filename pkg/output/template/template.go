@@ -6,19 +6,31 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/pkg/errors"
+
 	"github.com/hb-chen/deps/pkg/log"
 	"github.com/hb-chen/deps/pkg/output"
-	"github.com/pkg/errors"
 )
 
 type tpl struct {
 	opts *Options
 }
 
-func (t *tpl) Generate(deps map[string]*output.Dependency) error {
-	tmpl, err := template.ParseFiles(t.opts.TplFile)
-	if err != nil {
-		return errors.Wrap(err, "tpl:"+t.opts.TplFile)
+func (t *tpl) Generate(deps map[string]*output.Dependency) (err error) {
+	log.Logger.Debugf("template file: %v", t.opts.TplFile)
+	var tmpl *template.Template
+	if InternalTpl(t.opts.TplFile) {
+		pattern, err := Asset(t.opts.TplFile)
+		if err != nil {
+			return errors.Wrap(err, "tpl:"+t.opts.TplFile)
+		}
+
+		tmpl = template.Must(template.New(t.opts.TplFile).Parse(string(pattern)))
+	} else {
+		tmpl, err = template.ParseFiles(t.opts.TplFile)
+		if err != nil {
+			return errors.Wrap(err, "tpl:"+t.opts.TplFile)
+		}
 	}
 
 	// create dir when not exist
@@ -38,8 +50,10 @@ func (t *tpl) Generate(deps map[string]*output.Dependency) error {
 	defer func() {
 		if err = tmpfile.Close(); err != nil {
 			if e, ok := err.(*os.PathError); !ok || e.Err != os.ErrClosed {
-				log.Logger.Info(err)
+				log.Logger.Warn(err)
 			}
+
+			err = nil
 		}
 	}()
 
@@ -56,7 +70,7 @@ func (t *tpl) Generate(deps map[string]*output.Dependency) error {
 	// a file while a process is holding a file handle.
 	err = tmpfile.Close()
 	if err != nil {
-		return err
+		log.Logger.Warn(err)
 	}
 
 	err = os.Rename(tmpfile.Name(), t.opts.OutFile)

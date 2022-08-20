@@ -94,26 +94,25 @@ type Advisory struct {
 	ObservedAt     int      `json:"observedAt"`
 }
 
-func Info(p *graph.Package) (*PackageInfo, error) {
+func Info(p *graph.Package, info *PackageInfo) error {
 	if err := limiter.Wait(context.TODO()); err != nil {
-		return nil, err
+		return err
 	}
 
 	reqUrl := fmt.Sprintf("https://deps.dev/_/s/%s/p/%s/v/%s", p.System, url.PathEscape(p.Name), p.Version)
 
 	resp, err := req.Get(reqUrl)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	if resp.StatusCode == http.StatusOK {
-		info := PackageInfo{}
-		if err := resp.UnmarshalJson(&info); err != nil {
-			return nil, err
+		if err := resp.UnmarshalJson(info); err != nil {
+			return err
 		}
 
-		return &info, nil
+		return nil
 	} else {
-		return nil, errors.New("get package info status: " + resp.Status)
+		return errors.New("get package info status: " + resp.Status)
 	}
 }

@@ -2,6 +2,7 @@ package deps
 
 import (
 	"path/filepath"
+	"regexp"
 	"strings"
 
 	"github.com/hb-chen/deps/pkg/graph"
@@ -16,25 +17,23 @@ import (
 )
 
 func filepathAbs(path string) string {
-	if path, err := filepath.Abs(path); err != nil {
+	if p, err := filepath.Abs(path); err != nil {
 		log.Logger.Fatal(err)
 		return ""
 	} else {
-		return path
+		return p
 	}
-
 }
 
-func Deps(system, project string) error {
+func Deps(system, project, tpl, out string, patterns []string) error {
 	if strings.ToLower(system) == "auto" {
 		// TODO 根据目录文件自动判断 go:mod.go maven:pom.xml
 		return errors.New("system=auto unsupported")
 	}
 	log.Logger.Debugf("system type %v", project)
 
-	// TODO 完善模板和输出文件配置，以及相对目录问题
-	tplFile := filepathAbs("./template/md.tpl")
-	outFile := filepathAbs("./out/deps.md")
+	tplFile := filepathAbs(tpl)
+	outFile := filepathAbs(out)
 
 	if project == "" {
 		project = "./"
@@ -63,42 +62,57 @@ func Deps(system, project string) error {
 	} else {
 		deps := make(map[string]*output.Dependency)
 		for _, dep := range graphs {
+
 			if _, ok := deps[dep.Requirement.Name]; ok {
 				continue
 			}
 
-			if info, err := scrape.Info(dep.Requirement); err == nil {
-				deps[dep.Requirement.Name] = &output.Dependency{
-					System:     dep.Requirement.System,
-					Package:    dep.Requirement.Name,
-					Version:    dep.Requirement.Version,
-					Licenses:   info.Version.Licenses,
-					Direct:     dep.Requirement.Direct,
-					Advisories: info.Version.Advisories,
+			// skip scrape package
+			skipScrape := false
+			for _, sp := range patterns {
+				matched, err := regexp.MatchString(sp, dep.Requirement.Name)
+				if err != nil {
+					log.Logger.Error(err)
+				} else if matched {
+					skipScrape = true
+					break
 				}
-
-				log.Logger.Infof("Pkg: %v, Licenses: %v", info.Package.Name, strings.Join(info.Version.Licenses, ","))
-			} else {
-				deps[dep.Requirement.Name] = &output.Dependency{
-					System:  dep.Requirement.System,
-					Package: dep.Requirement.Name,
-					Version: dep.Requirement.Version,
-					Direct:  dep.Requirement.Direct,
-				}
-
-				log.Logger.Errorw(err.Error(), "p", dep.Requirement.Name, "v", dep.Requirement.Version)
 			}
+
+			info := scrape.PackageInfo{}
+			if !skipScrape {
+				if err := scrape.Info(dep.Requirement, &info); err != nil {
+					log.Logger.Errorw(err.Error(), "p", dep.Requirement.Name, "v", dep.Requirement.Version)
+				}
+			}
+
+			deps[dep.Requirement.Name] = &output.Dependency{
+				System:     dep.Requirement.System,
+				Package:    dep.Requirement.Name,
+				Version:    dep.Requirement.Version,
+				Licenses:   info.Version.Licenses,
+				Direct:     dep.Requirement.Direct,
+				Advisories: info.Version.Advisories,
+			}
+
+			log.Logger.Debugf("Pkg: %v, Scraped:%v, Licenses: %v Advisories: %v", dep.Requirement.Name, !skipScrape,
+				strings.Join(info.Version.Licenses, ","), len(info.Version.Advisories))
 		}
 
-		// TODO 输出选项及自定义配置
+		// 模板输出
+		if template.InternalTpl(tpl) {
+			// 使用 Template 内置的模板
+			tplFile = tpl
+		}
 		out := template.NewOutput(
 			template.WithTplFile(tplFile),
 			template.WithOutFile(outFile),
 		)
 		if err := out.Generate(deps); err != nil {
-			log.Logger.Error(err)
+			log.Logger.Fatal(err)
 		}
 
+		// 标准输出
 		stdOut := std.NewOutput()
 		if err := stdOut.Generate(deps); err != nil {
 			log.Logger.Error(err)

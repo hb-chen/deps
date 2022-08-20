@@ -26,11 +26,12 @@ func Test_info(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err := Info(&graph.Package{
+			info := PackageInfo{}
+			err := Info(&graph.Package{
 				System:  "go",
 				Name:    "github.com/hb-chen/deps",
 				Version: "",
-			})
+			}, &info)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("info() error = %v, wantErr %v", err, tt.wantErr)
 				return

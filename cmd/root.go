@@ -11,6 +11,9 @@ import (
 
 var system = ""
 var project = ""
+var tpl = ""
+var out = ""
+var skip []string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -27,7 +30,7 @@ to quickly create a Cobra application.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
-		if err := deps.Deps(system, project); err != nil {
+		if err := deps.Deps(system, project, tpl, out, skip); err != nil {
 			log.Logger.Error(err)
 		}
 	},
@@ -51,6 +54,9 @@ func init() {
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
-	rootCmd.PersistentFlags().StringVarP(&system, "system", "s", "auto", "System type:auto, mod, maven")
-	rootCmd.PersistentFlags().StringVarP(&project, "project", "p", "", `Project path (default "", use "pwd")`)
+	rootCmd.PersistentFlags().StringVarP(&system, "system", "s", "auto", "system type:auto, mod, maven")
+	rootCmd.PersistentFlags().StringVarP(&project, "project", "p", "", `project path (default "", use "pwd")`)
+	rootCmd.PersistentFlags().StringVarP(&tpl, "tpl", "t", "md.tpl", `template output template filepath. md.tpl,csv.tpl or custom template filepath`)
+	rootCmd.PersistentFlags().StringVarP(&out, "out", "o", "./deps.md", `template output filepath`)
+	rootCmd.PersistentFlags().StringSliceVarP(&skip, "skip", "", []string{}, `skip scrape package regexp pattern`)
 }

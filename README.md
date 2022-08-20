@@ -19,7 +19,7 @@ Deps 是一个帮助获取项目依赖包的版本、开源协议、安全漏洞
   - [x] [deps.dev](https://deps.dev/)
   - [ ] 取本地 mod/pom 中的 licenses 信息
 - 其他功能
-  - [ ] 支持模板输出，自定义格式
+  - [x] 支持模板输出，自定义格式
   - [ ] 开源协议友好性标识
   - [ ] 通过 Project 目录文件自动识别语言及包管理工具
   - [ ] License 文件提取
@@ -48,8 +48,11 @@ Usage:
 
 Flags:
   -h, --help             help for deps
-  -p, --project string   Project path (default "", use "pwd")
-  -s, --system string    System type:auto, mod, maven (default "auto")
+  -o, --out string       template output filepath (default "./deps.md")
+  -p, --project string   project path (default "", use "pwd")
+      --skip strings     skip scrape package regexp pattern
+  -s, --system string    system type:auto, mod, maven (default "auto")
+  -t, --tpl string       template output template filepath. md.tpl,csv.tpl or custom template filepath (default "md.tpl")
   -v, --version          version for deps
 ```
 

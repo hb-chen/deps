@@ -11,6 +11,7 @@ require (
 )
 
 require (
+	github.com/go-bindata/go-bindata v1.0.0 // indirect
 	github.com/hashicorp/errwrap v1.0.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
