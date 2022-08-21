@@ -1,4 +1,4 @@
-package std
+package stdout
 
 import (
 	"fmt"
@@ -7,9 +7,9 @@ import (
 	"github.com/hb-chen/deps/pkg/output"
 )
 
-type std struct{}
+type stdout struct{}
 
-func (*std) Generate(deps map[string]*output.Dependency) error {
+func (*stdout) Generate(deps map[string]*output.Dependency) error {
 	fmt.Println("Dependencies:")
 	for _, dep := range deps {
 		fmt.Printf("Pkg: %v, Licenses: %v , Direct: %v ,Advisories: %v \n", dep.Package,
@@ -21,5 +21,5 @@ func (*std) Generate(deps map[string]*output.Dependency) error {
 }
 
 func NewOutput() output.Output {
-	return &std{}
+	return &stdout{}
 }

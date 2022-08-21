@@ -10,7 +10,7 @@ import (
 	"github.com/hb-chen/deps/pkg/graph/mod"
 	"github.com/hb-chen/deps/pkg/log"
 	"github.com/hb-chen/deps/pkg/output"
-	"github.com/hb-chen/deps/pkg/output/std"
+	"github.com/hb-chen/deps/pkg/output/stdout"
 	"github.com/hb-chen/deps/pkg/output/template"
 	"github.com/hb-chen/deps/pkg/scrape"
 	"github.com/pkg/errors"
@@ -113,8 +113,8 @@ func Deps(system, project, tpl, out string, patterns []string) error {
 		}
 
 		// 标准输出
-		stdOut := std.NewOutput()
-		if err := stdOut.Generate(deps); err != nil {
+		std := stdout.NewOutput()
+		if err := std.Generate(deps); err != nil {
 			log.Logger.Error(err)
 		}
 	}
