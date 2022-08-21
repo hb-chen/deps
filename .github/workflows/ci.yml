@@ -3,33 +3,12 @@ on:
   pull_request:
     branches:
       - main
-  push:
-    branches:
-      - develop
+#  push:
+#    branches:
+#      - develop
 jobs:
-  lint:
-    name: Lint
-    runs-on: ubuntu-latest
-    steps:
-    - name: Set up Go 1.17
-      uses: actions/setup-go@v1
-      with:
-        go-version: 1.17
-      id: go
-    - name: Code
-      uses: actions/checkout@v1
-    - name: Intsall Golangci-lint
-      run: curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b . latest
-    - name: Lint
-      run: ./golangci-lint run ./...
-#    - name: Run coverage
-#      run: go test -race -coverprofile=coverage.txt -covermode=atomic ./...
-#    - name: Upload coverage to Codecov
-#      run: bash <(curl -s https://codecov.io/bash)
-
-  test:
-    #needs: Lint
-    name: Unit Testing
+  lint_test:
+    name: Lint and Testing
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -42,6 +21,12 @@ jobs:
       id: go
     - name: Code
       uses: actions/checkout@v1
+    - name: Intsall Golangci-lint
+      run: curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b . latest
+      if: matrix.os == 'ubuntu-latest'
+    - name: Lint
+      run: ./golangci-lint run ./...
+      if: matrix.os == 'ubuntu-latest'
     - name: Go Get dependencies
       run: go get -v -t -d ./...
     - name: Go Test
