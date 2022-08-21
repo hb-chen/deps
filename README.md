@@ -56,6 +56,9 @@ Flags:
   -v, --version          version for deps
 ```
 
+- `--skip` 忽略非开源依赖包
+  - `deps -s maven -p ./ --skip="com.hbchen.*"`
+
 ### Golang
 ```shell
 # Run
@@ -66,7 +69,7 @@ deps -s mod -p {project path}
 
 # Output
 # Markdown
-./out/deps.md
+./deps.md
 
 # Stdout
 Dependencies:
@@ -90,7 +93,7 @@ deps -s maven -p ./example/java/
 
 # Output
 # Markdown
-./out/deps.md
+./deps.md
 
 # Stdout
 Dependencies:

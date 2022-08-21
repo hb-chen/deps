@@ -1,0 +1,39 @@
+name: CI
+on:
+  pull_request:
+    branches:
+      - main
+#  push:
+#    branches:
+#      - develop
+jobs:
+  lint_test:
+    name: Lint and Testing
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macOS-latest,ubuntu-latest]
+    steps:
+    - name: Set up Go 1.17
+      uses: actions/setup-go@v1
+      with:
+        go-version: 1.17
+      id: go
+    - name: Code
+      uses: actions/checkout@v1
+    - name: Intsall Golangci-lint
+      run: curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b . latest
+      if: matrix.os == 'ubuntu-latest'
+    - name: Lint
+      run: ./golangci-lint run ./...
+      if: matrix.os == 'ubuntu-latest'
+    - name: Go Get dependencies
+      run: go get -v -t -d ./...
+    - name: Go Test
+      run: go test -race -cover -v ./...
+    - name: Run coverage
+      run: go test -race -coverprofile=coverage.txt -covermode=atomic ./...
+      if: matrix.os == 'ubuntu-latest'
+    - name: Upload coverage to Codecov
+      run: bash <(curl -s https://codecov.io/bash)
+      if: matrix.os == 'ubuntu-latest'
