@@ -100,7 +100,7 @@ func Deps(system, project, tpl, out string, patterns []string) error {
 		}
 
 		// 模板输出
-		if template.InternalTpl(tpl) {
+		if ok, _ := template.InternalTpl(tpl); ok {
 			// 使用 Template 内置的模板
 			tplFile = tpl
 		}

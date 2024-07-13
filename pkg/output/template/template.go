@@ -1,7 +1,9 @@
 package template
 
 import (
+	"embed"
 	"html/template"
+	"io"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -12,6 +14,9 @@ import (
 	"github.com/hb-chen/deps/pkg/output"
 )
 
+//go:embed tpl/*.tpl
+var embedTpl embed.FS
+
 type tpl struct {
 	opts *Options
 }
@@ -19,8 +24,8 @@ type tpl struct {
 func (t *tpl) Generate(deps map[string]*output.Dependency) (err error) {
 	log.Logger.Debugf("template file: %v", t.opts.TplFile)
 	var tmpl *template.Template
-	if InternalTpl(t.opts.TplFile) {
-		pattern, err := Asset(t.opts.TplFile)
+	if ok, file := InternalTpl(t.opts.TplFile); ok {
+		pattern, err := io.ReadAll(file)
 		if err != nil {
 			return errors.Wrap(err, "tpl:"+t.opts.TplFile)
 		}
